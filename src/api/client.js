@@ -1,8 +1,8 @@
 // Python (FastAPI) бэкендіне арналған жеңіл fetch-орағыш.
-// Бэкенд backend/ ішінде, әдепкі бойынша localhost:8000-де көтеріледі
-// (uvicorn app.main:app --reload --port 8000).
-
-const API_BASE_URL = 'http://localhost:8000';
+// Локалда бэкенд localhost:8000-де көтеріледі (uvicorn app.main:app --reload).
+// Продакшенда Vercel-дегі VITE_API_BASE_URL айнымалысы арқылы нақты бэкенд
+// URL-і беріледі (мыс. https://smart-life-backend.up.railway.app).
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
 export class ApiError extends Error {
   constructor(status, body) {

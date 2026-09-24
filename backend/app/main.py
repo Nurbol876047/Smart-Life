@@ -17,6 +17,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+from app.config import FRONTEND_ORIGINS
 from app.routers.ai import router as ai_router
 from services.ai.errors import (
     AIUnavailableError,
@@ -37,7 +38,10 @@ app = FastAPI(title="Smart Life API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=FRONTEND_ORIGINS,
+    # Vercel preview деплойлары әр branch/PR үшін жаңа URL жасайды —
+    # FRONTEND_ORIGINS тізімін әр жолы жаңартпау үшін *.vercel.app рұқсат етілген.
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_methods=["*"],
     allow_headers=["*"],
 )
